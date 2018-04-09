@@ -7,6 +7,13 @@
 {% set wanted_gems = packages.gems.wanted %}
 {% set unwanted_gems = packages.gems.unwanted %}
 
+{% if wanted_gems and not wanted_gems|is_list %}
+    {% set wanted_gems = wanted_gems.keys() %}
+{% endif %}
+{% if unwanted_gems and not unwanted_gems|is_list %}
+    {% set unwanted_gems = unwanted_gems.keys() %}
+{% endif %}
+
 ### REQ PKGS (without these, some of the WANTED GEMS will fail to install)
 gem_req_pkgs:
   pkg.installed:

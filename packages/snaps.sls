@@ -6,11 +6,26 @@
 # the attributes correctly (see #17)
 {% set req_packages = packages.pkgs.required.pkgs + [packages.snaps.package] %}
 {% set req_states = packages.pkgs.required.states + packages.snaps.required.states %}
-{% set unwanted_packages = packages.pkgs.unwanted + packages.snaps.collides %}
+
+{% set unwanted_packages = packages.pkgs.unwanted %}
+{% if unwanted_packages and not unwanted_packages|is_list %}
+    {% set unwanted_packages = unwanted_packages.keys() %}
+{% endif %}
+{% set unwanted_packages = unwanted_packages + packages.snaps.collides %}
 
 {% set wanted_snaps = packages.snaps.wanted %}
 {% set classic_snaps = packages.snaps.classic %}
 {% set unwanted_snaps = packages.snaps.unwanted %}
+
+{% if wanted_snaps and not wanted_snaps|is_list %}
+    {% set wanted_snaps = wanted_snaps.keys() %}
+{% endif %}
+{% if unwanted_snaps and not unwanted_snaps|is_list %}
+    {% set unwanted_snaps = unwanted_snaps.keys() %}
+{% endif %}
+{% if classic_snaps and not classic_snaps|is_list %}
+    {% set classic_snaps = classic_snaps.keys() %}
+{% endif %}
 
 {%- if packages.snaps.package %}
   {% if packages.snaps.wanted or packages.snaps.unwanted %}

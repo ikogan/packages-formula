@@ -7,6 +7,13 @@
 {% set wanted_pips = packages.pips.wanted %}
 {% set unwanted_pips = packages.pips.unwanted %}
 
+{% if wanted_pips and not wanted_pips|is_list %}
+    {% set wanted_pips = wanted_pips.keys() %}
+{% endif %}
+{% if unwanted_pips and not unwanted_pips|is_list %}
+    {% set unwanted_pips = unwanted_pips.keys() %}
+{% endif %}
+
 ### REQ PKGS (without these, some of the WANTED PIPS will fail to install)
 pip_req_pkgs:
   pkg.installed:

@@ -9,6 +9,13 @@
 {% set wanted_packages = packages.pkgs.wanted %}
 {% set unwanted_packages = packages.pkgs.unwanted %}
 
+{% if wanted_packages and not wanted_packages|is_list %}
+    {% set wanted_packages = wanted_packages.keys() %}
+{% endif %}
+{% if unwanted_packages and not unwanted_packages|is_list %}
+    {% set unwanted_packages = unwanted_packages.keys() %}
+{% endif %}
+
 ### PRE-REQ PKGS (without these, some of the WANTED PKGS will fail to install)
 pkg_req_pkgs:
   pkg.installed:
