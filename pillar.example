@@ -42,7 +42,7 @@ packages:
     wanted:
       - hello-world
     classic:
-      - classic-hello
+      - hello-classic
     unwanted:
       - goodbye-world
 
