@@ -9,10 +9,17 @@
 {% set wanted_packages = packages.pkgs.wanted %}
 {% set unwanted_packages = packages.pkgs.unwanted %}
 
+{% if req_states %}
+include:
+  {% for dep in req_states %}
+  - {{ dep }}
+  {% endfor %}
+{% endif %}
+
 ### PRE-REQ PKGS (without these, some of the WANTED PKGS will fail to install)
 pkg_req_pkgs:
   pkg.installed:
-    - pkgs: {{ req_packages }}
+    - pkgs: {{ req_packages | json }}
     {% if req_states %}
     - require:
       {% for dep in req_states %}
@@ -29,10 +36,12 @@ held_pkgs:
       - {{ p }}: {{ v }}
       {% endfor %}
     {% else %}
-    - pkgs: {{ held_packages }}
+    - pkgs: {{ held_packages | json }}
     {% endif %}
+    {% if grains['os_family'] not in ['Suse'] %}
     - hold: true
     - update_holds: true
+    {% endif %}
     - require:
       - pkg: pkg_req_pkgs
         {% for dep in req_states %}
@@ -42,8 +51,10 @@ held_pkgs:
 
 wanted_pkgs:
   pkg.installed:
-    - pkgs: {{ wanted_packages }}
+    - pkgs: {{ wanted_packages | json }}
+    {% if grains['os_family'] not in ['Suse'] %}
     - hold: false
+    {% endif %}
     - require:
       - pkg: pkg_req_pkgs
       {% if req_states %}
@@ -54,5 +65,5 @@ wanted_pkgs:
 
 unwanted_pkgs:
   pkg.purged:
-    - pkgs: {{ unwanted_packages }}
+    - pkgs: {{ unwanted_packages | json }}
 

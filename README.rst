@@ -127,12 +127,45 @@ You can specify:
 * ``required states`` on which any of the ``wanted`` packages depend for their
   correct installation (ie, ``epel`` for RedHat families).
 
+``packages.npms``
+-----------------
+
+This formula **DOES NOT** install ``nodejs/npm``, as it's outside of its scope:
+nodejs/npm that comes with the distros is usually outdated, so it's required to add
+a repo, run scripts, etc, and this formula manages packages :)
+
+You can use the `nodejs-formula <https://github.com/saltstack-formulas/node-formula>`_
+and add a dependency for it in the pillar `npms:required:sls` (see the pillar.example)
+
+You can specify:
+
+* ``wanted`` npm packages, which will be installed using npm. Requires you
+  specify the correct ``npm`` package for your distro, as a dependency
+  (see the pillar.example)
+* ``unwanted`` npm packages, which will be uninstalled using npm.
+* ``required system packages`` on which any of the ``wanted`` npm packages
+  depend for their correct installation. Usually, a ``npm`` package and/or
+  some other compiler packages are required.
+* ``required states`` on which any of the ``wanted`` packages depend for their
+  correct installation (ie, ``epel`` for RedHat families).
+
+``packages.archives``
+-------------------
+
+'Archive file` handler for common 'download' and 'checksum' states. All formats recognized by `salt.states.archive.extracted` (tar, rar, zip, etc) will be extracted. Alternatively `raw` formats are supported (`raw`, `bin`,) for standard and binary executable files.
+
+* ``wanted`` archive package software, which will be installed by extraction.
+* ``unwanted`` archive package software, which are uninstalled by directory removal.
+* ``required archive packages`` on which any of the ``wanted`` items depend on. Optional.
+
+
 ``packages.snaps``
 -----------------
 
 You can specify:
 
 * ``wanted`` snapd packages, which will be installed using snap.
+* ``classic`` snapd packages, chich will be installed using snap with classic confinement.
 * ``unwanted`` snapd packages, which will be uninstalled using snap.
 * ``required system packages`` on which any of the ``wanted`` snapd packages
   depend for their correct installation.
@@ -161,7 +194,9 @@ for integration tests.
 Tested on
 
 * Debian/9
+* Debian/8 (with backports)
 * Centos/7
 * Fedora/27
-* Ubuntu/17.10
-
+* Ubuntu/16.04
+* Ubuntu/18.04
+* Opensuse/leap

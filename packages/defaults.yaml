@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
 packages:
+  tmpdir: /tmp/saltstack-packages-formula-archives
   remote_pkgs: {}
   pkgs:
     held: {}
@@ -12,6 +13,7 @@ packages:
   pips:
     wanted: []
     unwanted: []
+    config: []
     required:
       states: []
       pkgs: []
@@ -21,13 +23,28 @@ packages:
     required:
       states: []
       pkgs: []
-  snaps:
-    package: snapd
-    collides: []
-    symlink: False
-    service: ['snapd',]
+  npms:
     wanted: []
     unwanted: []
     required:
       states: []
       pkgs: []
+  snaps:
+    packages: ['snapd', 'fuse',]
+    collides: []
+    symlink: False
+    service: ['snapd',]
+    wanted: []
+    classic: []
+    unwanted: []
+    required:
+      states: []
+      pkgs: []
+  archives:
+    pkgs:
+      required: ['curl', 'bzip2', 'gzip']
+    types: ['tar', 'zip', 'rar']
+    wanted: {}    #note: dict
+    unwanted: []
+    required:
+      archives: {}    #note: dict

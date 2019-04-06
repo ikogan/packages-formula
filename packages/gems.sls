@@ -7,10 +7,17 @@
 {% set wanted_gems = packages.gems.wanted %}
 {% set unwanted_gems = packages.gems.unwanted %}
 
+{% if req_states %}
+include:
+  {% for dep in req_states %}
+  - {{ dep }}
+  {% endfor %}
+{% endif %}
+
 ### REQ PKGS (without these, some of the WANTED GEMS will fail to install)
 gem_req_pkgs:
   pkg.installed:
-    - pkgs: {{ req_pkgs }}
+    - pkgs: {{ req_pkgs | json }}
 
 ### GEMS to install
 # (requires the ruby/rubygem deb/rpm installed, either by the system or listed in
