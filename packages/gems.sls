@@ -7,17 +7,25 @@
 {% set wanted_gems = packages.gems.wanted %}
 {% set unwanted_gems = packages.gems.unwanted %}
 
+<<<<<<< HEAD
 {% if wanted_gems and not wanted_gems|is_list %}
     {% set wanted_gems = wanted_gems.keys() %}
 {% endif %}
 {% if unwanted_gems and not unwanted_gems|is_list %}
     {% set unwanted_gems = unwanted_gems.keys() %}
+=======
+{% if req_states %}
+include:
+  {% for dep in req_states %}
+  - {{ dep }}
+  {% endfor %}
+>>>>>>> af5bbf19a9d43e2d36c9ac964fcd22dbea753998
 {% endif %}
 
 ### REQ PKGS (without these, some of the WANTED GEMS will fail to install)
 gem_req_pkgs:
   pkg.installed:
-    - pkgs: {{ req_pkgs }}
+    - pkgs: {{ req_pkgs | json }}
 
 ### GEMS to install
 # (requires the ruby/rubygem deb/rpm installed, either by the system or listed in

@@ -4,7 +4,7 @@
 
 # As we are 'extend'ing pkg_req_pkgs and unwanted_pkgs, we need to concatenate
 # the attributes correctly (see #17)
-{% set req_packages = packages.pkgs.required.pkgs + [packages.snaps.package] %}
+{% set req_packages = packages.pkgs.required.pkgs + packages.snaps.packages %}
 {% set req_states = packages.pkgs.required.states + packages.snaps.required.states %}
 
 {% set unwanted_packages = packages.pkgs.unwanted %}
@@ -17,6 +17,7 @@
 {% set classic_snaps = packages.snaps.classic %}
 {% set unwanted_snaps = packages.snaps.unwanted %}
 
+<<<<<<< HEAD
 {% if wanted_snaps and not wanted_snaps|is_list %}
     {% set wanted_snaps = wanted_snaps.keys() %}
 {% endif %}
@@ -29,19 +30,28 @@
 
 {%- if packages.snaps.package %}
   {% if packages.snaps.wanted or packages.snaps.unwanted %}
+=======
+{%- if packages.snaps.packages %}
+  {% if wanted_snaps or classic_snaps or unwanted_snaps %}
+>>>>>>> af5bbf19a9d43e2d36c9ac964fcd22dbea753998
 
 ### REQ PKGS (without this, SNAPS can fail to install/uninstall)
 include:
   - packages.pkgs
+  {% if req_states %}
+    {% for dep in req_states %}
+  - {{ dep }}
+    {% endfor %}
+  {% endif %}
 
 extend: 
   unwanted_pkgs:
     pkg.purged:
-      - pkgs: {{ unwanted_packages }}
+      - pkgs: {{ unwanted_packages | json }}
 
   pkg_req_pkgs:
     pkg.installed:
-      - pkgs: {{ req_packages }}
+      - pkgs: {{ req_packages | json }}
     {% if req_states %}
       - require:
       {% for dep in req_states %}
@@ -71,7 +81,7 @@ packages-{{ snap }}-service:
       - pkg: pkg_req_pkgs
       - pkg: unwanted_pkgs
 {% endfor %}
-  
+
 ### SNAPS to install
 {% for snap in wanted_snaps %}
 packages-snapd-{{ snap }}-wanted:

@@ -8,4 +8,14 @@ services:
 before_install:
   - bundle install
 
-script: bundle exec kitchen verify
+env:
+  matrix:
+    - INSTANCE: deb-debian-9
+    - INSTANCE: ubu16-ubuntu-1604
+    - INSTANCE: ubu18-ubuntu-1804
+    - INSTANCE: rpm-centos-7
+    - INSTANCE: fed-fedora
+    - INSTANCE: sus-opensuse-leap-salt-minion
+
+script:
+  - bundle exec kitchen verify ${INSTANCE}
