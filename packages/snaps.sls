@@ -11,13 +11,17 @@
 {% if unwanted_packages and not unwanted_packages|is_list %}
     {% set unwanted_packages = unwanted_packages.keys() %}
 {% endif %}
+
+{% set unwanted_packages = packages.pkgs.unwanted %}
+{% if unwanted_packages and not unwanted_packages|is_list %}
+    {% set unwanted_packages = unwanted_packages.keys() %}
+{% endif %}
 {% set unwanted_packages = unwanted_packages + packages.snaps.collides %}
 
 {% set wanted_snaps = packages.snaps.wanted %}
 {% set classic_snaps = packages.snaps.classic %}
 {% set unwanted_snaps = packages.snaps.unwanted %}
 
-<<<<<<< HEAD
 {% if wanted_snaps and not wanted_snaps|is_list %}
     {% set wanted_snaps = wanted_snaps.keys() %}
 {% endif %}
@@ -28,12 +32,8 @@
     {% set classic_snaps = classic_snaps.keys() %}
 {% endif %}
 
-{%- if packages.snaps.package %}
-  {% if packages.snaps.wanted or packages.snaps.unwanted %}
-=======
 {%- if packages.snaps.packages %}
   {% if wanted_snaps or classic_snaps or unwanted_snaps %}
->>>>>>> af5bbf19a9d43e2d36c9ac964fcd22dbea753998
 
 ### REQ PKGS (without this, SNAPS can fail to install/uninstall)
 include:
@@ -44,7 +44,7 @@ include:
     {% endfor %}
   {% endif %}
 
-extend: 
+extend:
   unwanted_pkgs:
     pkg.purged:
       - pkgs: {{ unwanted_packages | json }}

@@ -9,19 +9,18 @@
 {% set wanted_packages = packages.pkgs.wanted %}
 {% set unwanted_packages = packages.pkgs.unwanted %}
 
-<<<<<<< HEAD
 {% if wanted_packages and not wanted_packages|is_list %}
     {% set wanted_packages = wanted_packages.keys() %}
 {% endif %}
 {% if unwanted_packages and not unwanted_packages|is_list %}
     {% set unwanted_packages = unwanted_packages.keys() %}
-=======
+{% endif %}
+
 {% if req_states %}
 include:
   {% for dep in req_states %}
   - {{ dep }}
   {% endfor %}
->>>>>>> af5bbf19a9d43e2d36c9ac964fcd22dbea753998
 {% endif %}
 
 ### PRE-REQ PKGS (without these, some of the WANTED PKGS will fail to install)
