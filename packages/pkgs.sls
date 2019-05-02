@@ -59,7 +59,7 @@ held_pkgs:
 wanted_pkgs:
   pkg.installed:
     - pkgs: {{ wanted_packages | json }}
-    {% if grains['os_family'] not in ['Suse'] %}
+    {% if grains['os_family'] not in ['Suse'] and (grains['os'] != 'Fedora' or grains['osmajorrelease'] < 30) %}
     - hold: false
     {% endif %}
     - require:
