@@ -3,3 +3,8 @@ Fedora-30:
     required:
       pkgs:
         - python3-dnf-plugin-versionlock
+Fedora-31:
+  pkgs:
+    required:
+      pkgs:
+        - python3-dnf-plugin-versionlock
