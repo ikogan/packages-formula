@@ -8,10 +8,10 @@
 {% set unwanted_gems = packages.gems.unwanted %}
 
 {% if wanted_gems and not wanted_gems|is_list %}
-    {% set wanted_gems = wanted_gems.keys() %}
+    {% set wanted_gems = (wanted_gems.keys())|list %}
 {% endif %}
 {% if unwanted_gems and not unwanted_gems|is_list %}
-    {% set unwanted_gems = unwanted_gems.keys() %}
+    {% set unwanted_gems = (unwanted_gems.keys())|list %}
 {% endif %}
 
 {% if req_states %}

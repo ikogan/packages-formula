@@ -16,10 +16,10 @@ include:
 {% endif %}
 
 {% if wanted_pips and not wanted_pips|is_list %}
-    {% set wanted_pips = wanted_pips.keys() %}
+    {% set wanted_pips = (wanted_pips.keys())|list %}
 {% endif %}
 {% if unwanted_pips and not unwanted_pips|is_list %}
-    {% set unwanted_pips = unwanted_pips.keys() %}
+    {% set unwanted_pips = (unwanted_pips.keys())|list %}
 {% endif %}
 
 ### REQ PKGS (without these, some of the WANTED PIPS will fail to install)

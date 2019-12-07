@@ -9,12 +9,12 @@
 
 {% set unwanted_packages = packages.pkgs.unwanted %}
 {% if unwanted_packages and not unwanted_packages|is_list %}
-    {% set unwanted_packages = unwanted_packages.keys() %}
+    {% set unwanted_packages = (unwanted_packages.keys())|list %}
 {% endif %}
 
 {% set unwanted_packages = packages.pkgs.unwanted %}
 {% if unwanted_packages and not unwanted_packages|is_list %}
-    {% set unwanted_packages = unwanted_packages.keys() %}
+    {% set unwanted_packages = (unwanted_packages.keys())|list %}
 {% endif %}
 {% set unwanted_packages = unwanted_packages + packages.snaps.collides %}
 
@@ -23,13 +23,13 @@
 {% set unwanted_snaps = packages.snaps.unwanted %}
 
 {% if wanted_snaps and not wanted_snaps|is_list %}
-    {% set wanted_snaps = wanted_snaps.keys() %}
+    {% set wanted_snaps = (wanted_snaps.keys())|list %}
 {% endif %}
 {% if unwanted_snaps and not unwanted_snaps|is_list %}
-    {% set unwanted_snaps = unwanted_snaps.keys() %}
+    {% set unwanted_snaps = (unwanted_snaps.keys())|list %}
 {% endif %}
 {% if classic_snaps and not classic_snaps|is_list %}
-    {% set classic_snaps = classic_snaps.keys() %}
+    {% set classic_snaps = (classic_snaps.keys())|list %}
 {% endif %}
 
 {%- if packages.snaps.packages %}

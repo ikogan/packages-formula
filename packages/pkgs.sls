@@ -10,10 +10,10 @@
 {% set unwanted_packages = packages.pkgs.unwanted %}
 
 {% if wanted_packages and not wanted_packages|is_list %}
-    {% set wanted_packages = wanted_packages.keys() %}
+    {% set wanted_packages = (wanted_packages.keys())|list %}
 {% endif %}
 {% if unwanted_packages and not unwanted_packages|is_list %}
-    {% set unwanted_packages = unwanted_packages.keys() %}
+    {% set unwanted_packages = (unwanted_packages.keys())|list %}
 {% endif %}
 
 {% if req_states %}
