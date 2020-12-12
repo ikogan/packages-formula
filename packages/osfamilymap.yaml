@@ -14,7 +14,7 @@ Debian:
   pips:
     required:
       pkgs:
-        - python-pip
+        - python3-pip
   gems:
     required:
       pkgs:
